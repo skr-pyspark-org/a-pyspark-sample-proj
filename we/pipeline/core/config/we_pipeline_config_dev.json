@@ -1,0 +1,101 @@
+{
+  "catalog": "alta_data_lake_poc_dev",
+  "raw_database": "raw",
+  "bronze_database": "bronze",
+  "silver_database": "silver",
+  "gold_database": "gold",
+  "bucket": "alta-we-src-dev-v1"
+  "export_bucket": "alta-we-src-dev-v1",
+  "pg": {
+    "hostname": we-"",
+    "port": "5432",
+    "db": "altawedatahub",
+    "username": "XXXXXXXX"
+  },
+  "ci_pivot_address_job": {
+    "source": "people",
+    "destination": "person_address_work",
+    "destination_type": "view"
+  },
+  "regularise_address": {
+    "PM_ADDRESS": {
+      "source": "./we/pipeline/core/test/data/regularise_address_test1/input/crd_address",
+      "destination": "./we/pipeline/core/test/data/regularise_address_test1/ouput/crd_address",
+      "format": "csv",
+      "format_options": {
+        "sep": "," ,
+        "header": true,
+        "inferSchema": true,
+        "quote": "\""
+      },
+      "schema": "./we/pipeline/core/test/data/regularise_address_test/schema/crd_address.txt",
+      "mapping": "./we/pipeline/core/mapping/regularise_address_mapping.csv"
+    },
+    "ORG_MASTER": {
+      "source": "./we/pipeline/core/test/data/regularise_address_test1/input/org_master",
+      "destination": "./we/pipeline/core/test/data/regularise_address_test1/ouput/org_master",
+      "format": "csv",
+      "format_options": {
+        "sep": "," ,
+        "header": true,
+        "inferSchema": true,
+        "quote": "\""
+      },
+      "schema": "./we/pipeline/core/test/data/regularise_address_test/schema/org_master.txt",
+      "mapping": "./we/pipeline/core/mapping/regularise_address_mapping.csv"
+    } ,
+    "CRD_ADDRESS": {
+      "source": "./we/pipeline/core/test/data/regularise_address_test1/input/crd_address",
+      "destination": "./we/pipeline/core/test/data/regularise_address_test1/ouput/crd_address",
+      "format": "csv",
+      "format_options": {
+        "sep": "\u0006" ,
+        "header": true,
+        "inferSchema": true,
+        "quote": "\""
+      },
+      "schema": "./we/pipeline/core/test/data/regularise_address_test/schema/crd_address.txt",
+      "mapping": "./we/pipeline/core/mapping/regularise_address_mapping.csv"
+    }
+  },
+  "address_consolidation": {
+    "dedupe_columns" : [
+      "we_pid",
+      "first_name",
+      "middle_name",
+      "last_name",
+      "prefix",
+      "suffix",
+      "dob",
+      "gender",
+      "line_1",
+      "line_2",
+      "street_name",
+      "city",
+      "state",
+      "postal_code",
+      "postal_code4"
+    ],
+    "name_columns": [
+      "first_name",
+      "middle_name",
+      "last_name",
+      "prefix",
+      "suffix",
+      "gender",
+      "dob"
+    ],
+    "address_colums": [
+      "line_1",
+      "line_2",
+      "street_name",
+      "city",
+      "state",
+      "postal_code",
+      "postal_code4",
+      "batch_id"
+    ]
+  }
+
+
+}
