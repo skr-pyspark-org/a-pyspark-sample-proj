@@ -1,4 +1,4 @@
-name: ci worklow
+name: Adhoc main job
 
 on:
   workflow_dispatch:
@@ -24,10 +24,10 @@ on:
           type: boolean
           description: deploy a workflow
           default: true
-      skip_test:
-          type: boolean
-          description : to skip test cases or not
-          default: false
+      query:
+          type: string
+          description : sql queries to be executed ( multiple values are separated by | )
+
 
 permissions:
       id-token: write
@@ -35,11 +35,14 @@ permissions:
 
 jobs:
     ci-deploy-and-launch:
-      uses: ./.github/workflows/ci_launch_workflow.yml
+      uses: ./.github/workflows/ad_hoc_launch_workflow.yml
       with:
         environment: ${{ inputs.environment }}
         space: ${{ inputs.space }}
         deploy: ${{ inputs.deploy }}
         skip_test: ${{ inputs.skip_test }}
+        query: ${{ inputs.query }}
+      secrets: inherit
+
 
 
