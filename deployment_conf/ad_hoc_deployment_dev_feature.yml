@@ -1,0 +1,61 @@
+custom:
+  basic-cluster: &basic-cluster
+    new-cluster:
+      spark-version: "13.3.x-scala2.12"
+      policy_id: ""
+      autoscale:
+        min_workers:
+        max_workers:
+      node_type_id: "i3.xlarge"
+      data_security_code: "SINGLE_USER"
+      spark_conf:
+        spark.databricks.adaptive.autoOptimizationShuffle.enabled: "true"
+        spark.databricks.unityCatalog.userIsolation.python.preview.: "true"
+        spark.cleaner.referenceTracking.cleanCheckpoints: "true"
+        spark.hadoop.fs.s3a.multipart.size: 104857600
+        spark.databricks.python.defaultPythonRepl: "pythonshell"
+      acl: &acl
+        access_control_list:
+          - service_principal_name: ""
+            permission_level: "IS_OWNER"
+          - group_name: "SG-Alta-Databricks-Develpoment-Admin"
+            permission_level: "CAN_MANAGE"
+          - group_name: "SG-Alta-Databricks-Develpoment-Users"
+            permission_level: "CAN_MANAGE_RUN"
+      on-failure: &on-failure
+          on_failure:
+            - sekher.talupula@gmail.com
+      on-validation-success: &on-validation-success
+          on_success:
+            - sekher.talupula@gmail.com
+      on-validation-failure: &on-validation-failure
+          on_failure:
+                - sekher.talupula@gmail.com
+      tags:
+        alt:platform : "we"
+        alt:component: "we-ingestion"
+        alt:environment: "dev"
+
+environments:
+  dev_feature:
+    workflows:
+      - name: "we-pipeline-ci-dev-feature-wf"
+        <<: *acl
+        job_clusters:
+          - job_cluster_key: "default"
+            <<: *basic-cluster
+        tasks:
+          - task_key: "raw_ci"
+            job_cluster_key: "default"
+            depends-on:
+              - task_key : ""
+            spark_python_task:
+              python_file: "file://main.py"
+              parameters: ["we.pipeline.contact_info.task" ,
+                           "--env" ,"dev" ,
+                           "--space" , "feature"]
+            email_notifications:
+              <<: *on-failure
+            tags:
+              "alt:subcomponent": "raw contact_info task"
+
