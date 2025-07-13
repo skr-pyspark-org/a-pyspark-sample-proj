@@ -82,7 +82,7 @@ jobs:
       - name: deploy ci workflow
         if: ${{ inputs.deploy }}
         run: |
-          dbx deploy --workflows we-pipeline-adhoc-${{ inputs.environment }}-${{ inputs.space }}  --deployment-file=${{ inputs.deployment_file }} --environment ${{ inputs.environment }}_${{ inputs.space }} --debug  
+          dbx deploy --workflows we-pipeline-adhoc-${{ inputs.environment }}-${{ inputs.space }}-wf  --deployment-file=${{ inputs.deployment_file }} --environment ${{ inputs.environment }}_${{ inputs.space }} --debug  
 
 
 
