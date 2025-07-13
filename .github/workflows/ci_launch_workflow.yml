@@ -79,7 +79,7 @@ jobs:
       - name: deploy ci workflow
         if: ${{ inputs.deploy }}
         run: |
-          dbx deploy --workflow --deployment-file=${{ inputs.deployment_file }} --environment ${{ inputs.environment }}_${{ inputs.space }} --debug  
+          dbx deploy --workflows we-pipeline-ci-${{ inputs.environment }}_${{ inputs.space }}-wf --deployment-file=${{ inputs.deployment_file }} --environment ${{ inputs.environment }}_${{ inputs.space }} --debug  
 
 
 
@@ -107,6 +107,6 @@ jobs:
       - name: deploy ci workflow
         if: ${{ inputs.deploy }}
         run: |
-          dbx launch --workflow --deployment-file=${{ inputs.deployment_file }} --environment ${{ inputs.environment }}_${{ inputs.space }} --debug  
+          dbx launch we-pipeline-ci-${{ inputs.environment }}_${{ inputs.space }}-wf --environment ${{ inputs.environment }}_${{ inputs.space }} --debug  
 
 
