@@ -12,7 +12,7 @@ on:
       - opened
       - edited
       - reopened
-    branch:
+    branches:
       - "feature/**"
       - "Feature/**"
       - "release/**"
