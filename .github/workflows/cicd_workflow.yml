@@ -106,7 +106,7 @@ jobs:
         run: |
             pip install -e ".[dev]"
       - name : Run unit test
-        if : ${{ !input.skip_test }}
+#        if : ${{ !input.skip_test }}
         run: |
           pytest we/pipeline --cov=we/pipeline
 
@@ -117,8 +117,8 @@ jobs:
     secrets:
       authToken: ${{ secrets.GH_TOKEN }}
 
-  release:
-    needs: [build]
-    name: Release Solution
-    uses: ./.github/workflows/release.yml
-    secrets: inherit
+#  release:
+#    needs: [build]
+#    name: Release Solution
+#    uses: ./.github/workflows/release.yml
+#    secrets: inherit
