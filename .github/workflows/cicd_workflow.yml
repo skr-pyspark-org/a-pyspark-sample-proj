@@ -54,6 +54,8 @@ jobs:
               echo "commit message must start with one of the following prefixes: feat fix chore feat! fix! Merge)'"
               exit 1
           done
+          
+
   synchronized-check:
     if: ${{ github.event_name == 'pull_request' && contains(fromJSON( '["synchronized"]' ) , github.event.action) }}
     environment: dev_feature
