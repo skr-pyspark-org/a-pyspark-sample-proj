@@ -21,7 +21,7 @@ def etl_process(**options):
         SCHEMA_FILE_OPTION : "ci_neustar_schema.json"
     })
 
-    options = merge_dicts(options , md_option_ci_common , md_option_ci_autoloader)
+    options = merge_dicts(options , md_options_ci_common , md_options_ci_autoloader)
     options.update(
         {
             OBJECT_TYPE_OPTION : OBJECT_TYPE_CONTACT_INFO
