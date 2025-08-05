@@ -18,6 +18,8 @@ on:
       - "release/**"
 
 
+
+
 permissions:
   id-token: write
   contents: read
@@ -70,19 +72,8 @@ jobs:
     env:
       DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
       DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-      SMARTY_AUTH_ID: ${{ secrets.SMARTY_AUTH_ID }}
-      SMARTY_AUTH_TOKEN: ${{ secrets.SMARTY_AUTH_TOKEN }}
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
       TOTAL_EXECUTORS: ${{ secrets.TOTAL_EXECUTORS }}
-      SMARTY_RATE_LIMIT: ${{ secrets.SMARTY_RATE_LIMIT }}
-      SMARTY_ENTRY_LIMIT: ${{ secrets.SMARTY_ENTRY_LIMIT }}
-      ES_ENDPOINT: ${{ secrets.ES_ENDPOINT }}
-      PG_USERNAME: ${{ secrets.PG_USERNAME }}
-      PG_PASSWORD: ${{ secrets.PG_PASSWORD }}
-      PROD_PG_USERNAME : ${{ secrets.PROD_PG_USERNAME }}
-      PROD_PG_HOST : ${{ secrets.PROD_PG_HOST }}
-      PROD_PG_PASSWORD : ${{ secrets.PROD_PG_PASSWORD }}
-      PG_JDBC_DRIVER : ${{ secrets.PG_JDBC_DRIVER }}
     steps:
       - name: checkout repository
         uses: actions/checkout@v3
@@ -110,12 +101,8 @@ jobs:
     env:
       DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
       DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-      SMARTY_AUTH_ID: ${{ secrets.SMARTY_AUTH_ID }}
-      SMARTY_AUTH_TOKEN: ${{ secrets.SMARTY_AUTH_TOKEN }}
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
       TOTAL_EXECUTORS: ${{ secrets.TOTAL_EXECUTORS }}
-      SMARTY_RATE_LIMIT: ${{ secrets.SMARTY_RATE_LIMIT }}
-      SMARTY_ENTRY_LIMIT: ${{ secrets.SMARTY_ENTRY_LIMIT }}
     steps:
       - name: checkout repository
         uses: actions/checkout@v3
