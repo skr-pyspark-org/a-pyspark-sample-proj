@@ -1,7 +1,7 @@
 LOG_FORMAT = '%(asctime)s %(levelname)-5s %(module)s - %(message)s'
 
 #Environment , space , object_type and refresh_type details
-environment = ['dev','test','prod']
+environments = ['dev','test','prod']
 spaces = ['feature','synthetic','release']
 layers= ['raw','bronze','silver','gold']
 object_types=['aa','ci','oa','pos','re','ri','don','it','am']
