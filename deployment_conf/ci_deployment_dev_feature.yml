@@ -37,17 +37,31 @@ custom:
 environments:
   dev_feature:
     workflows:
-      - name: "we-pipeline-adhoc-wf"
+      - name: "we-pipeline-ci-wf"
         <<: *acl
         job_clusters:
           - job_cluster_key: "default"
             <<: *basic-cluster
         tasks:
-          - task_key: "adhoc_query_task"
+          - task_key: "ci_std_task1"
             job_cluster_key: "default"
             spark_python_task:
               python_file: "file://main.py"
-              parameters: ["we.pipeline.ad_hoc.adhoc_query_task" , "--env" ,"dev" , "--space" , "feature"]
+              parameters: ["we.pipeline.contact_info.bronze.ci_std_task_1" , "--env" ,"dev" , "--space" , "feature"]
+            email_notifications:
+              <<: *on-failure
+          - task_key: "ci_std_task2"
+            job_cluster_key: "default"
+            spark_python_task:
+              python_file: "file://main.py"
+              parameters: ["we.pipeline.contact_info.bronze.ci_std_task_2" , "--env" ,"dev" , "--space" , "feature"]
+            email_notifications:
+              <<: *on-failure
+          - task_key: "ci_resolve_id_task"
+            job_cluster_key: "default"
+            spark_python_task:
+              python_file: "file://main.py"
+              parameters: ["we.pipeline.contact_info.silver.ci_resolve_id" , "--env" ,"dev" , "--space" , "feature"]
             email_notifications:
               <<: *on-failure
 
