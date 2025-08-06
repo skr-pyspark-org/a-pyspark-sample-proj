@@ -41,5 +41,6 @@ jobs:
         space: ${{ inputs.space }}
         deploy: ${{ inputs.deploy }}
         skip_test: ${{ inputs.skip_test }}
+      secrets: inherit
 
 
