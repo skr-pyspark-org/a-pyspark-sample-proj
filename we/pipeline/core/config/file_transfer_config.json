@@ -1,0 +1,29 @@
+{
+  "contact_info": {
+    "pipeline_code": "ci",
+    "vendors": [
+      {
+        "neustar": {
+            "vendor_code": "neustar",
+            "souce_details": {
+              "type": "AWS-S3"
+            },
+          "file_details": [
+            {
+              "load_type": "full_load",
+              "file_type": "contact_info",
+              "file_format": "WealthEngine_CIFv6_dddddddd.txt",
+              "file_starting_search_string": "WealthEngine_CIFv6",
+              "split_delimiter": "_",
+              "batch_id_position": 2,
+              "batch_id_digits": 8,
+              "file_ending_search_string": ".txt.gz$",
+              "aws_src_path": "unprocessed_contact_info",
+              "aws_tgt_path": "unprocessed_contact_info"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

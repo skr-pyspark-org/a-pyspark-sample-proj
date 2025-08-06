@@ -1,0 +1,112 @@
+name: CI launch workflow
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        type: string
+        required: true
+        description: deplotyment environment
+      space:
+        type: string
+        required: true
+        description: deplotyment space
+      deploy:
+        type: boolean
+        required: true
+        description: deploy it or not
+      skip_test:
+        type: boolean
+        required: false
+        description: skip testcases or not
+    secrets:
+      DATABRICKS_HOST:
+        required: true
+      DATABRICKS_TOKEN:
+        required: true
+      GH_TOKEN:
+        required: true
+jobs:
+  deploy-ci-config:
+    environment: ${{ inputs.environment }}_${{ inputs.space }}
+    runs-on: ubuntu-latest
+    env:
+      DATABRICKS_HOST : ${{ secrets.DATABRICKS_HOST }}
+      DATABRICKS_TOKEN : ${{ secrets.DATABRICKS_TOKEN }}
+      GH_TOKEN : ${{ secrets.GH_TOKEN }}
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v3
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.10.8
+      - name: install pip
+        run: |
+          python -m pip install --upgrade pip
+      - name: install dependencies
+        run: | 
+          pip install -e ".[dev]"
+      - name: upload configuratio file
+        if: ${{ inputs.deploy }}
+        run: |
+          databricks fs cp --overwrite we/pipeline/core/config/we_pipeline_config_${{ inputs.environment }}.json dbfs:/FileStore/configuration/we_pipeline_config_${{ inputs.environment }}.json
+
+
+
+  deploy-ci-job:
+    needs: deploy-ci-config
+    if: ${{ inputs.deploy }}
+    environment: ${{ inputs.environment }}_${{ inputs.space }}
+    runs-on: ubuntu-latest
+    env:
+      DATABRICKS_HOST : ${{ secrets.DATABRICKS_HOST }}
+      DATABRICKS_TOKEN : ${{ secrets.DATABRICKS_TOKEN }}
+      GH_TOKEN : ${{ secrets.GH_TOKEN }}
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v3
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.10.8
+      - name: install pip
+        run: |
+          python -m pip install --upgrade pip
+      - name: install dependencies
+        run: | 
+          pip install -e ".[dev]"
+      - name: deploy ci workflow
+        if: ${{ inputs.deploy }}
+        run: |
+          dbx deploy --workflows we-pipeline-ci-${{ inputs.environment }}_${{ inputs.space }}-wf --deployment-file=${{ inputs.deployment_file }} --environment ${{ inputs.environment }}_${{ inputs.space }} --debug  
+
+
+
+  launch-ci-job:
+    needs: deploy-ci-job
+    environment: ${{ inputs.environment }}_${{ inputs.space }}
+    runs-on: ubuntu-latest
+    env:
+      DATABRICKS_HOST : ${{ secrets.DATABRICKS_HOST }}
+      DATABRICKS_TOKEN : ${{ secrets.DATABRICKS_TOKEN }}
+      GH_TOKEN : ${{ secrets.GH_TOKEN }}
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v3
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.10.8
+      - name: install pip
+        run: |
+          python -m pip install --upgrade pip
+      - name: install dependencies
+        run: | 
+          pip install -e ".[dev]"
+      - name: deploy ci workflow
+        if: ${{ inputs.deploy }}
+        run: |
+          dbx launch we-pipeline-ci-${{ inputs.environment }}_${{ inputs.space }}-wf --environment ${{ inputs.environment }}_${{ inputs.space }} --debug  
+
+

@@ -1,0 +1,45 @@
+name: ci worklow
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        options:
+          - dev
+          - test
+          - prod
+        description : deployment environment
+      space:
+          type: choice
+          options:
+            - feature
+            - qa
+            - synthetic
+            - actual
+            - release
+          description: space
+          required: true
+      deploy:
+          type: boolean
+          description: deploy a workflow
+          default: true
+      skip_test:
+          type: boolean
+          description : to skip test cases or not
+          default: false
+
+permissions:
+      id-token: write
+      contents: read
+
+jobs:
+    ci-deploy-and-launch:
+      uses: ./.github/workflows/ci_launch_workflow.yml
+      with:
+        environment: ${{ inputs.environment }}
+        space: ${{ inputs.space }}
+        deploy: ${{ inputs.deploy }}
+        skip_test: ${{ inputs.skip_test }}
+
+

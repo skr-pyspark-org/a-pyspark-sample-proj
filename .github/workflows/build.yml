@@ -1,0 +1,22 @@
+name: "Build"
+on:
+  workflow_call:
+    inputs:
+      branch:
+        type: string
+        required: false
+        description: "Branch to build"
+    secrets:
+      authToken:
+          required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - if: ${{ inputs.branch }}
+        name: checkout repository from branch ${{ inputs.branch }}
+        uses: actions/checkout@v3
+        with:
+          refs: ${{ inputs.branch }}
+          fetch-depth: 0
