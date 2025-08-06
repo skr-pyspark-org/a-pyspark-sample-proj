@@ -32,13 +32,13 @@ PACKAGE_REQUIREMENTS = [
 DEV_REQUIREMENTS = [
     "nameparser==1.1.2",
     "pyspark==3.3.0",
-    "dbx>0.8"
+    "dbx>0.8",
     "PyYAML==6.0",
     'python-dotenv==1.0.0',
     "wheel",
     "pysftp==0.2.9",
     "boto3==1.34.51",
-    "jellyfish==1.1.0"
+    "jellyfish==1.1.0",
     "pytest == 7.1.3",
     "pandas == 1.5.0",
     "numpy == 1.23.1",
