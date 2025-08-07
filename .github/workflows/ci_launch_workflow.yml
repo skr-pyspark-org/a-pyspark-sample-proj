@@ -50,7 +50,10 @@ jobs:
       - name: upload configuration file
         if: ${{ inputs.deploy }}
         run: |
+          echo "####################   files in dbfs   #################"
           databricks fs ls dbfs:/
+          echo "####################   uploading file to dbfs   #################"
+          databricks fs cp --overwrite we/pipeline/core/config/we_pipeline_config_${{ inputs.environment }}.json dbfs:/Volumes/alta_data_lake_poc/feature_raw_dd/raw_dd_vol/configuration/we_pipeline_config_${{ inputs.environment }}.json
           
 
   deploy-ci-job:
