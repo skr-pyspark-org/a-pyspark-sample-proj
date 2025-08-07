@@ -50,7 +50,8 @@ jobs:
       - name: upload configuratio file
         if: ${{ inputs.deploy }}
         run: |
-          databricks fs cp --overwrite we/pipeline/core/config/we_pipeline_config_${{ inputs.environment }}.json dbfs:/FileStore/configuration/we_pipeline_config_${{ inputs.environment }}.json
+          #databricks fs cp --overwrite we/pipeline/core/config/we_pipeline_config_${{ inputs.environment }}.json dbfs:/FileStore/configuration/we_pipeline_config_${{ inputs.environment }}.json
+          databricks fs cp --overwrite we/pipeline/core/config/we_pipeline_config_${{ inputs.environment }}.json /Volumes/alta_data_lake_poc/feature_raw_dd/raw_dd_vol/configuration/we_pipeline_config_${{ inputs.environment }}.json
 
 
 
