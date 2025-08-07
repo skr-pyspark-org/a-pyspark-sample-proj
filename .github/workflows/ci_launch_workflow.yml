@@ -47,7 +47,7 @@ jobs:
       - name: install dependencies
         run: | 
           pip install -e ".[dev]"
-      - name: upload configuratio file
+      - name: upload configuration file
         if: ${{ inputs.deploy }}
         run: |
           databricks fs ls dbfs:/
